@@ -12,14 +12,14 @@ VetPets API es una interfaz RESTful diseñada para digitalizar la gestión integ
 * **¿Qué problema resuelve?:** Centraliza la información de los pacientes (mascotas), el historial clínico, el agendamiento de citas y la prescripción de tratamientos, eliminando el uso de fichas en papel y optimizando los tiempos de atención. 
 
 ## 🎥 Video de Presentación
-* 🎬 **Enlace al video de presentación (Máx. 5 minutos):** []
+* 🎬 **Enlace al video de presentación (Máx. 5 minutos):** [https://drive.google.com/file/d/1TZ_17PzI6YpUI-tIP8t4WOfo8YDyPOuT/view?usp=sharing]
 
 ## 👥 Equipo de Desarrollo
 | Nombre | Rol | GitHub |
 |---|---|---|
 | Miguel agudelo | [Arquitecto de Software / Backend] | [agudelomiguel803-pixel](https://github.com/agudelomiguel803-pixel) |
 | Samuel moreno | [Desarrollador Backend / Database] | [12vasquezsamuel2006-byte · he/him](https://github.com/12vasquezsamuel2006-byte) |
-| Brayan soto | [Desarrollador Backend / QA Tester] | [@usuario]() |
+| Brayan soto | [Desarrollador Backend / QA Tester] | [brafersoto-debug](https://github.com/brafersoto-debug) |
 | Miguel Lezcano | [Documentador / Analyst] | [lezcano030408-lab](https://github.com/lezcano030408-lab) |
 
 ## 🗃️ Modelo de Datos (Entidades)
@@ -141,5 +141,5 @@ Base URL propuesta: `http://api.vetpets.com/v1`
 
 ## 🔗 Enlaces
 * **Repositorio GitHub:** [https://github.com/agudelomiguel803-pixel/api-design-VetPets.git]
-* **Video de Presentación:** []
+* **Video de Presentación:** [https://drive.google.com/file/d/1TZ_17PzI6YpUI-tIP8t4WOfo8YDyPOuT/view?usp=sharing]
 * **Organización del equipo:** N/A (Coordinación directa del equipo)
