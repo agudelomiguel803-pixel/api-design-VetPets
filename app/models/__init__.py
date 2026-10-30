@@ -6,6 +6,13 @@ from app.models.cite import (
     AppointmentPublic,
 )
 from app.models.pets import Pet, PetBase, PetCreate, PetUpdate, PetPublic
+from app.models.treatment import (
+    Treatment,
+    TreatmentBase,
+    TreatmentCreate,
+    TreatmentPublic,
+    TreatmentUpdate,
+)
 
 __all__ = [
     "Appointment",
@@ -18,4 +25,9 @@ __all__ = [
     "PetCreate",
     "PetUpdate",
     "PetPublic",
+    "Treatment",
+    "TreatmentBase",
+    "TreatmentCreate",
+    "TreatmentPublic",
+    "TreatmentUpdate",
 ]

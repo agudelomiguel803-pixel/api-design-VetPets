@@ -5,10 +5,10 @@ from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
     from app.models.pets import Pet
-    # Descomentar cuando hagas merge de las ramas de tus compañeros
+    from app.models.treatment import Treatment
+    # Descomentar cuando hagas merge de la rama de veterinarians
     # y verifiques que el nombre de la clase coincida exactamente:
     # from app.models.veterinarians import Veterinarians
-    # from app.models.treatment import Treatment
 
 
 class CitaBase(SQLModel):
@@ -59,16 +59,16 @@ class Appointment(CitaBase, table=True):
     # Relación N:1 hacia Mascota (Pet)
     pet: Optional["Pet"] = Relationship(back_populates="appointments")
 
-    # Descomentar cuando existan los modelos de tus compañeros
-    # (y que en esos modelos exista el back_populates="appointment" / "veterinarian"):
+    # Relación 1:N hacia Tratamientos (una cita genera muchos tratamientos)
+    treatments: list["Treatment"] = Relationship(
+        back_populates="appointment", cascade_delete=True
+    )
+
+    # Descomentar cuando exista el modelo de veterinarios
+    # (y que ese modelo tenga back_populates="veterinarian"):
     #
     # # Relación N:1 hacia Veterinario
     # veterinarian: Optional["Veterinarians"] = Relationship(back_populates="appointments")
-    #
-    # # Relación 1:N hacia Tratamientos (una cita genera muchos tratamientos)
-    # treatments: list["Treatment"] = Relationship(
-    #     back_populates="appointment", cascade_delete=True
-    # )
 
 
 class AppointmentCreate(CitaBase):
