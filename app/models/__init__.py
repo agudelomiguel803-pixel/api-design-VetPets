@@ -1,6 +1,4 @@
-from app.models.task import Task, TaskBase, TaskCreate, TaskPublic, TaskUpdate
-from app.models.user import User, UserBase, UserCreate, UserPublic, UserUpdate
-from app.models.veterinario import (
+from app.models.veterinarians import (
     Veterinario,
     VeterinarioBase,
     VeterinarioCreate,
@@ -9,16 +7,6 @@ from app.models.veterinario import (
 )
 
 __all__ = [
-    "User",
-    "UserBase",
-    "UserCreate",
-    "UserUpdate",
-    "UserPublic",
-    "Task",
-    "TaskBase",
-    "TaskCreate",
-    "TaskUpdate",
-    "TaskPublic",
     "Veterinario",
     "VeterinarioBase",
     "VeterinarioCreate",
