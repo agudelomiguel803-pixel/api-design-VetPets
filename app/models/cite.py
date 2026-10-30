@@ -6,9 +6,7 @@ from sqlmodel import Field, Relationship, SQLModel
 if TYPE_CHECKING:
     from app.models.pets import Pet
     from app.models.treatment import Treatment
-    # Descomentar cuando hagas merge de la rama de veterinarians
-    # y verifiques que el nombre de la clase coincida exactamente:
-    # from app.models.veterinarians import Veterinarians
+    from app.models.veterinarians import Veterinario
 
 
 class CitaBase(SQLModel):
@@ -28,9 +26,8 @@ class CitaBase(SQLModel):
         description="Estado actual de la cita (ej. pendiente, completada, cancelada)",
     )
     # IMPORTANTE: foreign_key usa el __tablename__ de la otra tabla.
-    # Verifica que el modelo de veterinarios tenga __tablename__ = "veterinarians".
     id_veterinario: int = Field(
-        foreign_key="veterinarians.id",
+        foreign_key="veterinarios.id",
         index=True,
         description="Identificador único del veterinario asignado",
     )
@@ -56,19 +53,16 @@ class Appointment(CitaBase, table=True):
         nullable=False,
     )
 
-    # Relación N:1 hacia Mascota (Pet)
+    # Relación N:1 hacia Veterinario (coincide con "citas" en Veterinario)
+    veterinarian: Optional["Veterinario"] = Relationship(back_populates="citas")
+
+    # Relación N:1 hacia Mascota (coincide con "appointments" en Pet)
     pet: Optional["Pet"] = Relationship(back_populates="appointments")
 
-    # Relación 1:N hacia Tratamientos (una cita genera muchos tratamientos)
+    # Relación 1:N hacia Tratamientos (coincide con "appointment" en Treatment)
     treatments: list["Treatment"] = Relationship(
         back_populates="appointment", cascade_delete=True
     )
-
-    # Descomentar cuando exista el modelo de veterinarios
-    # (y que ese modelo tenga back_populates="veterinarian"):
-    #
-    # # Relación N:1 hacia Veterinario
-    # veterinarian: Optional["Veterinarians"] = Relationship(back_populates="appointments")
 
 
 class AppointmentCreate(CitaBase):

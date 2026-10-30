@@ -13,6 +13,13 @@ from app.models.treatment import (
     TreatmentPublic,
     TreatmentUpdate,
 )
+from app.models.veterinarians import (
+    Veterinario,
+    VeterinarioBase,
+    VeterinarioCreate,
+    VeterinarioPublic,
+    VeterinarioUpdate,
+)
 
 __all__ = [
     "Appointment",
@@ -30,4 +37,9 @@ __all__ = [
     "TreatmentCreate",
     "TreatmentPublic",
     "TreatmentUpdate",
+    "Veterinario",
+    "VeterinarioBase",
+    "VeterinarioCreate",
+    "VeterinarioUpdate",
+    "VeterinarioPublic",
 ]
