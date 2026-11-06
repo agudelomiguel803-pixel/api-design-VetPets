@@ -2,18 +2,35 @@ from collections.abc import AsyncGenerator
 from typing import Any
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.engine.url import make_url
 from sqlmodel import SQLModel
 
 from app.core.config import settings
 
-# Argumentos de conexión especiales (ej. desactivar statement cache si se usa Neon Pooler)
-connect_args: dict[str, Any] = {}
-if "neon.tech" in settings.DATABASE_URL and "pooler" in settings.DATABASE_URL:
-    connect_args["statement_cache_size"] = 0
+# 1. Parseamos la URL de la base de datos
+url = make_url(settings.DATABASE_URL)
 
-# Motor asíncrono compatible con SQLite y Neon PostgreSQL
+# 2. Aseguramos que el driver sea postgresql+asyncpg si apunta a postgres
+if url.drivername in ["postgres", "postgresql"]:
+    url = url.set(drivername="postgresql+asyncpg")
+
+# 3. Limpiamos los parámetros de la URL que asyncpg no acepta directamente
+query = dict(url.query)
+query.pop("sslmode", None)
+query.pop("channel_binding", None)
+url = url.set(query=query)
+
+# Argumentos de conexión especiales (Neon / asyncpg)
+connect_args: dict[str, Any] = {}
+if "neon.tech" in settings.DATABASE_URL:
+    # Neon exige SSL para conexiones externas con asyncpg
+    connect_args["ssl"] = "require"
+    if "pooler" in settings.DATABASE_URL:
+        connect_args["statement_cache_size"] = 0
+
+# Motor asíncrono compatible con Neon PostgreSQL
 engine = create_async_engine(
-    settings.DATABASE_URL,
+    url,
     echo=settings.ECHO_SQL,
     pool_pre_ping=True,
     connect_args=connect_args,
