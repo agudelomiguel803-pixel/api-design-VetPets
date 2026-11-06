@@ -9,7 +9,7 @@ from app.repositories import (
     AppointmentRepository,
     PetsRepository,
     TreatmentRepository,
-    VeterinarianRepository,
+    VeterinariansRepository
 )
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
@@ -30,6 +30,6 @@ def get_treatment_repository(session: SessionDep) -> TreatmentRepository:
     return TreatmentRepository(session)
 
 
-def get_veterinarian_repository(session: SessionDep) -> VeterinarianRepository:
-    """Instancia VeterinarianRepository con la sesión de BD activa."""
-    return VeterinarianRepository(session)
+def get_veterinarian_repository(session: SessionDep) -> VeterinariansRepository:
+    """Instancia VeterinariansRepository con la sesión de BD activa."""
+    return VeterinariansRepository(session)
