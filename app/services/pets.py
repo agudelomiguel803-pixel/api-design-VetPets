@@ -4,13 +4,13 @@ Ubicación: app/services/pets.py
 """
 from fastapi import HTTPException, status
 from app.models.pets import Pet, PetCreate, PetUpdate
-from app.repositories.pets import PetRepository
+from app.repositories.pets import PetsRepository
 
 
 class PetService:
     """Capa de Lógica de Negocio para Pet."""
 
-    def __init__(self, pet_repo: PetRepository) -> None:
+    def __init__(self, pet_repo: PetsRepository) -> None:
         self.pet_repo = pet_repo
 
     async def get_by_id(self, pet_id: int) -> Pet:
