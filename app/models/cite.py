@@ -25,13 +25,13 @@ class CitaBase(SQLModel):
         max_length=50,
         description="Estado actual de la cita (ej. pendiente, completada, cancelada)",
     )
-    # IMPORTANTE: foreign_key usa el __tablename__ de la otra tabla.
+    # IMPORTANTE: foreign_key usa el __tablename__ de la otra tabla. RELACION cita y veterinario
     id_veterinario: int = Field(
         foreign_key="veterinarios.id",
         index=True,
         description="Identificador único del veterinario asignado",
     )
-    id_mascota: int = Field(
+    id_mascota: int = Field( // RELACION DE CITA CON MASCOTA
         foreign_key="pets.id",
         index=True,
         description="Identificador único de la mascota paciente",
