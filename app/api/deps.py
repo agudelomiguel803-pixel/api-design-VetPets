@@ -56,7 +56,7 @@ def get_treatment_service(treatment_repo: TreatmentRepoDep) -> TreatmentService:
 def get_veterinarian_service(veterinarians_repo: VeterinarianRepoDep) -> VeterinarianService:
     return VeterinarianService(veterinarians_repo)
 
-# --- Aliases Annotated requeridos por los Routers ---
+# --- Aliases Annotated para Servicios (Requeridos por los Routers) ---
 AppointmentServiceDep = Annotated[AppointmentService, Depends(get_appointment_service)]
 PetServiceDep = Annotated[PetService, Depends(get_pet_service)]
 TreatmentServiceDep = Annotated[TreatmentService, Depends(get_treatment_service)]
