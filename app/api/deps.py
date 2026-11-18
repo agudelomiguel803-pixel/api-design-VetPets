@@ -9,7 +9,10 @@ from app.repositories import (
     TreatmentRepository,
     VeterinariansRepository,
 )
-from app.services import AppointmentService
+from app.services.cite import AppointmentService
+from app.services.pets import PetService            
+from app.services.treatment import TreatmentService
+from app.services.veterinarians import VeterinarianService
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
 
@@ -32,7 +35,7 @@ PetsRepoDep = Annotated[PetsRepository, Depends(get_pets_repository)]
 TreatmentRepoDep = Annotated[TreatmentRepository, Depends(get_treatment_repository)]
 VeterinarianRepoDep = Annotated[VeterinariansRepository, Depends(get_veterinarian_repository)]
 
-# --- Fábrica del Servicio de Citas (Inyecta los 3 repositorios necesarios) ---
+# --- Fábricas de Servicios ---
 def get_appointment_service(
     appointment_repo: AppointmentRepoDep,
     pets_repo: PetsRepoDep,
@@ -44,5 +47,17 @@ def get_appointment_service(
         veterinarians_repo=veterinarians_repo,
     )
 
-# --- Alias Annotated para el Servicio ---
+def get_pet_service(pets_repo: PetsRepoDep) -> PetService:
+    return PetService(pets_repo)
+
+def get_treatment_service(treatment_repo: TreatmentRepoDep) -> TreatmentService:
+    return TreatmentService(treatment_repo)
+
+def get_veterinarian_service(veterinarians_repo: VeterinarianRepoDep) -> VeterinarianService:
+    return VeterinarianService(veterinarians_repo)
+
+# --- Aliases Annotated requeridos por los Routers ---
 AppointmentServiceDep = Annotated[AppointmentService, Depends(get_appointment_service)]
+PetServiceDep = Annotated[PetService, Depends(get_pet_service)]
+TreatmentServiceDep = Annotated[TreatmentService, Depends(get_treatment_service)]
+VeterinarianServiceDep = Annotated[VeterinarianService, Depends(get_veterinarian_service)]

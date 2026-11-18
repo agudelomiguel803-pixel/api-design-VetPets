@@ -8,11 +8,7 @@ from app.models.treatment import (
     Treatment,
 )
 
-
 router = APIRouter(prefix="/treatments", tags=["Treatments"])
-
-
-
 
 @router.post(
     "/",

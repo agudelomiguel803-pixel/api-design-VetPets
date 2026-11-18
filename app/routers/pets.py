@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
 from app.api.deps import PetServiceDep
-from app.models.pet import PetCreate, PetPublic, PetUpdate
+from app.models.pets import PetCreate, PetPublic, PetUpdate
 
 router = APIRouter(prefix="/pets", tags=["Pets"])
 
