@@ -34,7 +34,7 @@ class AppointmentService:
         if not appointment:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Cita no encontrada",
+                detail="Esta cita no fue encontrada",
             )
         return appointment
 

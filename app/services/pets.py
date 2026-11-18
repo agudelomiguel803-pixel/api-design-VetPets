@@ -18,7 +18,7 @@ class PetService:
         if not pet:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Mascota no encontrada",
+                detail="Esta Mascota no fue encontrada",
             )
         return pet
 

@@ -17,7 +17,7 @@ class VeterinarianService:
         if not item:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Veterinario no encontrado",
+                detail="Este Veterinario no fue encontrado",
             )
         return item
 
