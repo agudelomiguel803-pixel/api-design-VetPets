@@ -3,6 +3,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Annotated, Any
+from app.routers import api_router
 
 from fastapi import Depends, FastAPI
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -182,6 +183,11 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
 )
+
+
+app.include_router(api_router, prefix=settings.API_V1_STR)
+
+
 
 @app.get("/health", tags=["Health"])
 async def health_check() -> dict[str, str]:
