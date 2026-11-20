@@ -6,6 +6,7 @@ from fastapi import HTTPException, status
 from app.models.veterinarians import Veterinario, VeterinarioCreate, VeterinarioUpdate
 from app.repositories.veterinarians import VeterinariansRepository
 
+
 class VeterinarianService:
     """Capa de Lógica de Negocio para Veterinarios."""
 
@@ -25,12 +26,41 @@ class VeterinarianService:
         return await self.vet_repo.get_multi(skip=skip, limit=limit)
 
     async def create(self, vet_in: VeterinarioCreate) -> Veterinario:
-        # TODO: Colocar aquí reglas de unicidad o validación previa si se requiere (ej. validar si la licencia ya existe)
+        existing_licencia = await self.vet_repo.get_by_licencia(vet_in.licencia)
+        if existing_licencia:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Hay un veterinario con esa licencia",
+            )
+
+        existing_email = await self.vet_repo.get_by_email(vet_in.email)
+        if existing_email:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Hay un veterinario con ese correo",
+            )
+
         return await self.vet_repo.create(vet_in)
 
     async def update(self, vet_id: int, vet_in: VeterinarioUpdate) -> Veterinario:
         item = await self.get_by_id(vet_id)
-        # TODO: Colocar aquí validaciones previas a la actualización
+
+        if vet_in.licencia is not None and vet_in.licencia != item.licencia:
+            existing_licencia = await self.vet_repo.get_by_licencia(vet_in.licencia)
+            if existing_licencia and existing_licencia.id != vet_id:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail="Hay un veterinario con esa licencia",
+                )
+
+        if vet_in.email is not None and vet_in.email != item.email:
+            existing_email = await self.vet_repo.get_by_email(vet_in.email)
+            if existing_email and existing_email.id != vet_id:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail="Hay un veterinario con ese correo",
+                )
+
         return await self.vet_repo.update(item, vet_in)
 
     async def delete(self, vet_id: int) -> None:

@@ -27,6 +27,7 @@ class VeterinarioBase(SQLModel):
     )
     email: str = Field(
         index=True,
+        unique=True,
         description="Correo electrónico de contacto del veterinario",
     )
 

@@ -6,6 +6,7 @@ from sqlmodel import select
 
 from app.models.veterinarians import Veterinario, VeterinarioCreate, VeterinarioUpdate
 
+
 class VeterinariansRepository:
     """Capa 3 - Acceso a Datos (Repositorio) para Veterinarios."""
 
@@ -15,6 +16,16 @@ class VeterinariansRepository:
     # 1. READ (Uno)
     async def get_by_id(self, item_id: int) -> Veterinario | None:
         return await self.session.get(Veterinario, item_id)
+
+    async def get_by_licencia(self, licencia: str) -> Veterinario | None:
+        statement = select(Veterinario).where(Veterinario.licencia == licencia)
+        result = await self.session.execute(statement)
+        return result.scalar_one_or_none()
+
+    async def get_by_email(self, email: str) -> Veterinario | None:
+        statement = select(Veterinario).where(Veterinario.email == email)
+        result = await self.session.execute(statement)
+        return result.scalar_one_or_none()
 
     # 2. READ (Múltiples)
     async def get_multi(self, *, skip: int = 0, limit: int = 100) -> list[Veterinario]:
