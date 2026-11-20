@@ -31,7 +31,7 @@ class CitaBase(SQLModel):
         index=True,
         description="Identificador único del veterinario asignado",
     )
-    id_mascota: int = Field( // RELACION DE CITA CON MASCOTA
+    id_mascota: int = Field( # RELACION DE CITA CON MASCOTA
         foreign_key="pets.id",
         index=True,
         description="Identificador único de la mascota paciente",

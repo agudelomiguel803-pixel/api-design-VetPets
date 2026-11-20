@@ -27,11 +27,9 @@ class AppointmentRepository:
         """Obtiene un listado paginado de citas con filtros opcionales."""
         statement = select(Appointment)
 
-        # Filtro opcional por mascota usando el atributo correcto del modelo
         if id_mascota is not None:
             statement = statement.where(Appointment.id_mascota == id_mascota)
 
-        # Filtro opcional por veterinario usando el atributo correcto del modelo
         if id_veterinario is not None:
             statement = statement.where(
                 Appointment.id_veterinario == id_veterinario
@@ -40,6 +38,21 @@ class AppointmentRepository:
         statement = statement.order_by(Appointment.id).offset(skip).limit(limit)
         result = await self.session.execute(statement)
         return list(result.scalars().all())
+
+    async def get_by_veterinarian_and_datetime(
+        self, id_veterinario: int, fecha_hora: datetime, exclude_id: int | None = None
+    ) -> Appointment | None:
+        """Busca si un veterinario ya tiene una cita programada exactamente en esa fecha y hora."""
+        statement = select(Appointment).where(
+            Appointment.id_veterinario == id_veterinario,
+            Appointment.fecha_hora == fecha_hora
+        )
+        
+        if exclude_id is not None:
+            statement = statement.where(Appointment.id != exclude_id)
+            
+        result = await self.session.execute(statement)
+        return result.scalars().first()
 
     async def create(self, appointment_in: AppointmentCreate) -> Appointment:
         """Inserta una nueva cita en la base de datos."""
